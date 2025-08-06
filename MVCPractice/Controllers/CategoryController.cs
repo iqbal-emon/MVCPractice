@@ -14,6 +14,7 @@ namespace MVCPractice.Controllers
         public IActionResult Index()
         {
           var categoriesList = _context.Categories.ToList();
+            ViewBag.Message = TempData["SuccessMessage"];
             return View(categoriesList);
         }
         public IActionResult Create()
@@ -25,8 +26,41 @@ namespace MVCPractice.Controllers
         {
             _context.Categories.Add(category);
             _context.SaveChanges();
+            TempData["SuccessMessage"] = "Category Added Succesfully";
             return RedirectToAction("Index","Category");
         }
+        public IActionResult Edit(int? id)
+        {
+            var category = _context.Categories.FirstOrDefault(c => c.Id == id);
+            return View(category);
+        }
+        [HttpPost]
+        public IActionResult Edit(Category category)
+        {
+            _context.Categories.Update(category);
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Category");
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            var category = _context.Categories.FirstOrDefault(c => c.Id == id);
+            return View(category);
+        }
+        [HttpPost]
+        [ActionName("Delete")]
+        public IActionResult DeletePost(int? id)
+        {
+            var category = _context.Categories.FirstOrDefault(c => c.Id == id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            _context.Categories.Remove(category);
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Category");
+        }
+
 
     }
 }

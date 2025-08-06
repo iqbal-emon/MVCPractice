@@ -1,0 +1,28 @@
+﻿@model CategoryProductDto
+
+<form method="post">
+    @* <input type="hidden" asp-for="Id" /> *@
+    
+    <div class="form-group">
+        <input asp-for="Product.Id" hidden class="form-control" required />
+
+        <label asp-for="Product.Name">Category Name:</label>
+        <input asp-for="Product.Name" class="form-control" required />
+
+
+        <label asp-for="Product.Name">Category Name:</label>
+        <select asp-for="Product.CategoryId" class="form-control">
+            @foreach (var category in Model.CategoryList)
+            {
+                <option value="@category.Id">@category.Name</option>
+
+            }
+
+
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Edit</button>
+    </form>
+   
+    

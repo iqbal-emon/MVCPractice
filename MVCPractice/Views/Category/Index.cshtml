@@ -20,18 +20,27 @@
             Name
         </th>
         <th>Order Id</th>
+        <th></th>
+            <th></th>
+
         </tr>
 
     </thead>
 
     <tbody>
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-success">@ViewBag.Message</div>
+        }
+
         @foreach(var obj in Model)
         {
             <tr>
                 <td>@obj.Id</td>
                 <td>@obj.Name</td>
                 <td>@obj.OrderId</td>
-
+                <td><a class="btn btn-primary" asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id">Edit</a></td>
+                <td><a class="btn btn-danger" asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id">Delete</a></td>
             </tr>
         }
        

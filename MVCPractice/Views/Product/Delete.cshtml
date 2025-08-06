@@ -1,0 +1,13 @@
+﻿@model Product
+
+<form method="post">
+    @* <input type="hidden" asp-for="Id" /> *@
+
+    <div class="form-group">
+        <label asp-for="Name">Category Name:</label>
+        <input disabled asp-for="Name" class="form-control" required />
+    </div>
+   
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+
