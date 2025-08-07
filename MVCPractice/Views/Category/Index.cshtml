@@ -28,10 +28,7 @@
     </thead>
 
     <tbody>
-        @if (ViewBag.Message != null)
-        {
-            <div class="alert alert-success">@ViewBag.Message</div>
-        }
+     <partial name="_Notification" />
 
         @foreach(var obj in Model)
         {

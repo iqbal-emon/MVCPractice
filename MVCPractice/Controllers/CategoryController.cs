@@ -38,6 +38,7 @@ namespace MVCPractice.Controllers
         public IActionResult Edit(Category category)
         {
             _context.Categories.Update(category);
+            TempData["SuccessMessage"] = "Category Updated Successfully";
             _context.SaveChanges();
             return RedirectToAction("Index", "Category");
         }
@@ -58,6 +59,8 @@ namespace MVCPractice.Controllers
             }
             _context.Categories.Remove(category);
             _context.SaveChanges();
+            TempData["SuccessMessage"] = "Category Deleted Succesfully";
+
             return RedirectToAction("Index", "Category");
         }
 
