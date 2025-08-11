@@ -1,0 +1,45 @@
+﻿@model Product
+
+<div class="container mt-5">
+    <!-- Back Button -->
+    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary mb-3">
+        ← Back to List
+    </a>
+
+    <div class="row">
+        <!-- Image Section -->
+        <div class="col-md-5 text-center">
+            <img src="" alt="@Model.Name" class="img-fluid rounded-4 shadow" style="max-height: 350px; object-fit: cover;">
+        </div>
+
+        <!-- Details Section -->
+        <div class="col-md-7">
+            <h2 class="fw-bold">@Model.Name</h2>
+            <p class="text-muted">@Model.Category.Name</p>
+            @* <h4 class="text-success">Price: @Model.Price.ToString("C")</h4> *@
+
+            <hr>
+
+            <h5>Description</h5>
+            @* <p>@Model.Description</p> *@
+
+            <h5>Stock Status</h5>
+            @* <p class="@(Model.InStock ? "text-success" : "text-danger")">
+                @(Model.InStock ? "Available" : "Out of Stock")
+            </p> *@
+
+            <!-- Buttons -->
+            <div class="mt-4">
+                @if (User.IsInRole("Admin"))
+                {
+                    <a href="@Url.Action("Edit", "Product", new { id = Model.Id })" class="btn btn-primary me-2">Edit</a>
+                    <a href="@Url.Action("Delete", "Product", new { id = Model.Id })" class="btn btn-danger">Delete</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("AddToCart", "Cart", new { id = Model.Id })" class="btn btn-success">Add to Cart</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
