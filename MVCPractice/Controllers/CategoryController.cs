@@ -1,9 +1,10 @@
-﻿using AspNetCoreGeneratedDocument;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MVCPractice.Models;
 
 namespace MVCPractice.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class CategoryController : Controller
     {
         private readonly AppDbContext _context;
