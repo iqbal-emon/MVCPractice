@@ -14,5 +14,7 @@ namespace MVCPractice.Models
         [ForeignKey("UserId")]
         public IdentityUser ApplcationUsers { get; set; }
 
+        [NotMapped]
+        public decimal Total { get; set; }
     }
 }

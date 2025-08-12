@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVCPractice.Models;
@@ -56,7 +57,56 @@ namespace MVCPractice.Controllers
             }
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Summary","Home");
+        }
+        [Authorize]
+        public IActionResult Summary()
+        {
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+           ShoppingCardVM shoppingCardVMs = new ShoppingCardVM();
+
+            shoppingCardVMs.ShoppingCardList = _context.ShoppingCarts.Where(s => s.UserId == userId).Include(s=>s.Product).ToList();
+            foreach (var obj in shoppingCardVMs.ShoppingCardList)
+            {
+                obj.Total = obj.Product.Price * obj.Count;
+                shoppingCardVMs.TotalAmount += (obj.Product.Price*obj.Count);
+
+            }
+
+            return View(shoppingCardVMs);
+        }
+
+
+        public IActionResult Plus(int id)
+        {
+
+           var UpdateData = _context.ShoppingCarts.FirstOrDefault(s=>s.Id==id);
+            UpdateData.Count += 1;
+            _context.ShoppingCarts.Update(UpdateData);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Summary));
+        }
+        public IActionResult Minus(int id)
+        {
+
+            var UpdateData = _context.ShoppingCarts.FirstOrDefault(s => s.Id == id);
+            if (UpdateData.Count > 1)
+            {
+                UpdateData.Count -= 1;
+                _context.ShoppingCarts.Update(UpdateData);
+                _context.SaveChanges();
+            }
+            else
+            {
+
+                _context.ShoppingCarts.Remove(UpdateData);
+                _context.SaveChanges();
+            }
+
+
+                return RedirectToAction(nameof(Summary));
         }
 
 
