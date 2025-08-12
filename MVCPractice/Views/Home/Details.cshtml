@@ -1,6 +1,8 @@
-﻿@model Product
-
+﻿@model ShoppingCart
+<form method="post">
 <div class="container mt-5">
+        <input class="form-control" asp-for="ProductId" hidden/>
+
     <!-- Back Button -->
     <a href="@Url.Action("Index", "Home")" class="btn btn-secondary mb-3">
         ← Back to List
@@ -9,27 +11,26 @@
     <div class="row">
         <!-- Image Section -->
         <div class="col-md-5 text-center">
-            <img src="" alt="@Model.Name" class="img-fluid rounded-4 shadow" style="max-height: 350px; object-fit: cover;">
+            <img src="" alt="@Model.Product.Name" class="img-fluid rounded-4 shadow" style="max-height: 350px; object-fit: cover;">
         </div>
 
         <!-- Details Section -->
         <div class="col-md-7">
-            <h2 class="fw-bold">@Model.Name</h2>
-            <p class="text-muted">@Model.Category.Name</p>
-            @* <h4 class="text-success">Price: @Model.Price.ToString("C")</h4> *@
+            <h2 class="fw-bold">@Model.Product.Name</h2>
+            <p class="text-muted">@Model.Product.Category.Name</p>
+            <h4 class="text-success">Price: @Model.Product.Price.ToString("C")</h4>
 
             <hr>
 
             <h5>Description</h5>
-            @* <p>@Model.Description</p> *@
-
-            <h5>Stock Status</h5>
+           <p>@Model.Product.Price</p> 
+            @* <h5>Stock Status</h5> *@
             @* <p class="@(Model.InStock ? "text-success" : "text-danger")">
                 @(Model.InStock ? "Available" : "Out of Stock")
             </p> *@
 
             <!-- Buttons -->
-            <div class="mt-4">
+            <div class="mt-4 ">
                 @if (User.IsInRole("Admin"))
                 {
                     <a href="@Url.Action("Edit", "Product", new { id = Model.Id })" class="btn btn-primary me-2">Edit</a>
@@ -37,9 +38,20 @@
                 }
                 else
                 {
-                    <a href="@Url.Action("AddToCart", "Cart", new { id = Model.Id })" class="btn btn-success">Add to Cart</a>
+                    <div class="row g-2">
+                        <div class="col-4">
+                            <input class="form-control" asp-for="Count" type="number" min="1" value="1" />
+                        </div>
+                        <div class="col-auto">
+                            
+                                <button type="submit" class="btn btn-success">Add to Cart</button>
+                        </div>
+                    </div>
+
+                   
                 }
             </div>
         </div>
     </div>
 </div>
+</form>

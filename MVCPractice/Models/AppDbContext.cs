@@ -11,6 +11,7 @@ namespace MVCPractice.Models
 
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; } 
     }
 }
     

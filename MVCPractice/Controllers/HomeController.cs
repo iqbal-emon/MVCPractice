@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVCPractice.Models;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace MVCPractice.Controllers
 {
@@ -22,11 +23,43 @@ namespace MVCPractice.Controllers
             var productList = _context.Products.Include(p => p.Category).ToList();
             return View(productList);
         }
-        public IActionResult Details(int id)
+        public IActionResult Details(int Id)
         {
-            var product = _context.Products.Include(p => p.Category).FirstOrDefault(p => p.Id == id);
-            return View(product);
+            var product = _context.Products.Include(p => p.Category).FirstOrDefault(p => p.Id == Id);
+            ShoppingCart shoppingCart = new ShoppingCart
+            {
+                ProductId = product.Id,
+                Product = product,
+                Count = 1
+            };
+            return View(shoppingCart);
         }
+
+        [HttpPost]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            shoppingCart.UserId = userId;
+            shoppingCart.Id = 0;
+
+            var dbShoppingCart = _context.ShoppingCarts.FirstOrDefault(s => s.ProductId == shoppingCart.ProductId && s.UserId == shoppingCart.UserId);
+            if (dbShoppingCart != null)
+            {
+                dbShoppingCart.Count += shoppingCart.Count;
+                _context.ShoppingCarts.Update(dbShoppingCart);
+
+            }
+            else
+            {
+                _context.ShoppingCarts.Add(shoppingCart);
+            }
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
 
 
         public IActionResult Privacy()
