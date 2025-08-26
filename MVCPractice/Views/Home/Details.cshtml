@@ -11,7 +11,7 @@
     <div class="row">
         <!-- Image Section -->
         <div class="col-md-5 text-center">
-            <img src="" alt="@Model.Product.Name" class="img-fluid rounded-4 shadow" style="max-height: 350px; object-fit: cover;">
+            <img src="@Model.Product.ImageUrl" alt="@Model.Product.Name" class="img-fluid rounded-4 shadow" style="max-height: 350px; object-fit: cover;">
         </div>
 
         <!-- Details Section -->
@@ -33,10 +33,10 @@
             <div class="mt-4 ">
                 @if (User.IsInRole("Admin"))
                 {
-                    <a href="@Url.Action("Edit", "Product", new { id = Model.Id })" class="btn btn-primary me-2">Edit</a>
-                    <a href="@Url.Action("Delete", "Product", new { id = Model.Id })" class="btn btn-danger">Delete</a>
+                        <a href="@Url.Action("Edit", "Product", new { id = Model.Product.Id})" class="btn btn-primary me-2">Edit</a>
+                        <a href="@Url.Action("Delete", "Product", new { id =Model.Product.Id })" class="btn btn-danger">Delete</a>
                 }
-                else
+                    else if (User.Identity.IsAuthenticated)
                 {
                     <div class="row g-2">
                         <div class="col-4">

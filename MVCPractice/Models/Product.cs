@@ -12,6 +12,8 @@ namespace MVCPractice.Models
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
 
     }
 }

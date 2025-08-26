@@ -1,6 +1,6 @@
 ﻿@model CategoryProductDto
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     @* <input type="hidden" asp-for="Id" /> *@
     
     <div class="form-group">
@@ -28,6 +28,14 @@
 
         <label asp-for="Product.Price">Product Price:</label>
         <input type="text" id="Price" asp-for="Product.Price" class="form-control" required>
+        <div>
+            <label>Current Image:</label><br />
+            <img src="@Url.Content(Model.Product.ImageUrl)"
+                 style="width:150px; height:150px; object-fit:cover;" />
+        </div>
+
+        <label asp-for="Product.ImageFile">Product Image:</label>
+        <input type="file" id="Image" asp-for="Product.ImageFile" class="form-control" required>
     </div>
 
     <button type="submit" class="btn btn-primary mt-2 ">Edit</button>

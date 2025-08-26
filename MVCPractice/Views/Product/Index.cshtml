@@ -23,6 +23,8 @@
         <th>Category Name</th>
         <th>Description</th>
         <th>Price</th>
+            <th>Image</th>
+
         <th></th>
             <th></th>
 
@@ -39,6 +41,7 @@
                 <td>@obj.Category?.Name</td>
                 <td>@obj.Description</td>
                 <td>@obj.Price.ToString("N2")</td>
+                <td><img src="@obj.ImageUrl" style="width:150px; height:150px; object-fit:cover;" /></td>
                 <td><a class="btn btn-primary" asp-controller="Product" asp-action="Edit" asp-route-id="@obj.Id">Edit</a></td>
                 <td><a class="btn btn-danger" asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id">Delete</a></td>
             </tr>

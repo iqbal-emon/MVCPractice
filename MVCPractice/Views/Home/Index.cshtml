@@ -6,8 +6,8 @@
 <div class="row">
     @foreach(var obj in Model)
     {
-        <div class="card m-2" style="width: 18rem;">
-            <img  class="card-img-top" alt="@obj.Name" />
+        <div class="card m-2 h-25" style="width: 18rem;">
+            <img class="card-img-top" alt="@obj.Name" src="@obj.ImageUrl" height="200"  />
             <div class="card-body text-center">
                 <h5 class="card-title">@obj.Name</h5>
                 <p class="card-text text-muted">@obj.Category.Name</p>

@@ -10,9 +10,9 @@
             @foreach(var obj in Model.ShoppingCardList)
             {
 
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm border-0 rounded-4">
-                        <img src="https://via.placeholder.com/300x200"
+                <div class="col-3 mb-4 ">
+                    <div class="card shadow-sm border-0 rounded-4 ">
+                        <img src="@obj.Product.ImageUrl" height="300" style=" width:100%; "
                              class="card-img-top rounded-top-4" alt="@obj.Product.ImageUrl">
                         <div class="card-body">
                             <h5 class="card-title">@obj.Product.Name</h5>

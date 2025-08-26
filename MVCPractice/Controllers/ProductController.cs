@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using MVCPractice.Models;
 
 namespace MVCPractice.Controllers
@@ -10,9 +11,11 @@ namespace MVCPractice.Controllers
     public class ProductController : Controller
     {
         private readonly AppDbContext _context;
-        public ProductController(AppDbContext context)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        public ProductController(AppDbContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
         public IActionResult Index()
         {
@@ -27,12 +30,42 @@ namespace MVCPractice.Controllers
             return View(categoryProductDto);
         }
         [HttpPost]
-        public IActionResult Create(Product product)
+        public async Task<IActionResult> Create(Product product)
         {
+            if (product.ImageFile != null)
+            {
+                // 1. Create folder path
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                string fileName = Path.GetFileNameWithoutExtension(product.ImageFile.FileName);
+                string extension = Path.GetExtension(product.ImageFile.FileName);
+
+                fileName = fileName + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + extension;
+
+                // Ensure images folder exists
+                string imageFolder = Path.Combine(wwwRootPath, "images");
+                if (!Directory.Exists(imageFolder))
+                {
+                    Directory.CreateDirectory(imageFolder);
+                }
+
+                string path = Path.Combine(imageFolder, fileName);
+
+                // 2. Save the image
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await product.ImageFile.CopyToAsync(fileStream);
+                }
+
+                // 3. Save file name to DB
+                product.ImageUrl = "/images/" + fileName;
+            }
+
             _context.Products.Add(product);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+
             return RedirectToAction("Index", "Product");
         }
+
         public IActionResult Edit(int? id)
         {
             var products = _context.Products.FirstOrDefault(c => c.Id == id);
@@ -44,12 +77,56 @@ namespace MVCPractice.Controllers
 
         }
         [HttpPost]
-        public IActionResult Edit(Product product)
+        public async Task<IActionResult> Edit(Product product)
         {
-            _context.Products.Update(product);
-            _context.SaveChanges();
+            
+                var existingProduct = await _context.Products.FindAsync(product.Id);
+                if (existingProduct == null)
+                    return NotFound();
+
+                // Update other fields
+                existingProduct.Name = product.Name;
+                existingProduct.Price = product.Price;
+                existingProduct.Description = product.Description;
+
+                // Only update image if a new file is uploaded
+                if (product.ImageFile != null)
+                {
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                    string fileName = Path.GetFileNameWithoutExtension(product.ImageFile.FileName);
+                    string extension = Path.GetExtension(product.ImageFile.FileName);
+                    fileName = $"{fileName}_{DateTime.Now:yyyyMMddHHmmss}{extension}";
+
+                    string imageFolder = Path.Combine(wwwRootPath, "images");
+                    if (!Directory.Exists(imageFolder))
+                        Directory.CreateDirectory(imageFolder);
+
+                    string path = Path.Combine(imageFolder, fileName);
+
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await product.ImageFile.CopyToAsync(fileStream);
+                    }
+
+                    // Delete old image (optional)
+                    if (!string.IsNullOrEmpty(existingProduct.ImageUrl))
+                    {
+                        string oldImagePath = Path.Combine(wwwRootPath, existingProduct.ImageUrl.TrimStart('/'));
+                        if (System.IO.File.Exists(oldImagePath))
+                            System.IO.File.Delete(oldImagePath);
+                    }
+
+                    existingProduct.ImageUrl = "/images/" + fileName;
+                }
+
+                _context.Products.Update(existingProduct);
+                await _context.SaveChangesAsync();
+
+
+
             return RedirectToAction("Index", "Product");
         }
+
 
         public IActionResult Delete(int? id)
         {
