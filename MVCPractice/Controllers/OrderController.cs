@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVCPractice.Models;
 using System.Security.Claims;
@@ -12,6 +13,7 @@ namespace MVCPractice.Controllers
         {
             _context = context;
         }
+        [Authorize]
 
         public IActionResult Index()
         {
@@ -21,6 +23,7 @@ namespace MVCPractice.Controllers
 
             return View(orders);
         }
+        [Authorize]
 
         public IActionResult OrderDetails(int? id)
         {
@@ -31,7 +34,10 @@ namespace MVCPractice.Controllers
           .Include(o => o.OrderDetails)
               .ThenInclude(od => od.Product)
           .FirstOrDefault();
-
+            if(order == null)
+            {
+                return NotFound();
+            }
             return View(order);
         }
 
