@@ -1,0 +1,60 @@
+﻿@model OrderHeader
+
+<div class="container py-4">
+    <h2 class="mb-3">📝 Order Details</h2>
+
+    <!-- Order Summary -->
+    <div class="card shadow-sm mb-4 rounded-4">
+        <div class="card-body">
+            <h4 class="card-title">Order Summary</h4>
+            <p><strong>Order Id:</strong> @Model.Id</p>
+            <p><strong>Order Date:</strong> @Model.OrderDate.ToString("yyyy-MM-dd")</p>
+            <p>
+                <strong>Status:</strong>
+                <span class="badge bg-info">@Model.OrderStatus</span>
+            </p>
+            <p>
+                <strong>Payment:</strong>
+                <span class="badge bg-warning">@Model.PaymentStatus</span>
+            </p>
+            <p><strong>Total Amount:</strong> <span class="text-success fw-bold">@Model.OrderTotal.ToString("N2") tk</span></p>
+        </div>
+    </div>
+
+    <!-- Order Items -->
+    <div class="card shadow-sm rounded-4">
+        <div class="card-body">
+            <h4 class="card-title mb-3">Products</h4>
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderDetails)
+                    {
+                        <tr>
+                            <td>
+                                <img src="@item.Product.ImageUrl" width="80" height="122" class="rounded" />
+                            </td>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Count</td>
+                            <td>@item.Price.ToString("N2") tk</td>
+                            <td>@( (item.Price * item.Count).ToString("N2") ) tk</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a asp-action="Index" class="btn btn-secondary rounded-pill px-4">⬅ Back to Orders</a>
+    </div>
+</div>

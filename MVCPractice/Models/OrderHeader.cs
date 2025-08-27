@@ -22,6 +22,7 @@ namespace MVCPractice.Models
         public string PaymentStatus { get; set; } // Pending, Paid, Refunded
 
         public string? ShippingAddress { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; }
     }
 
 }

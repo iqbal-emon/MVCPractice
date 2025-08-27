@@ -110,8 +110,8 @@ namespace MVCPractice.Controllers
 
             OrderHeader orderHeader = new OrderHeader();
             orderHeader = checkoutVM.OrderHeader;
-            orderHeader.PaymentStatus = "Pending";
-            orderHeader.OrderStatus = "Pending";
+            orderHeader.PaymentStatus = SD.PaymentPending;
+            orderHeader.OrderStatus = SD.StatusPending;
             orderHeader.UserId = userId;
             orderHeader.OrderTotal = TotalAmount;
             orderHeader.OrderDate = DateTime.Now;

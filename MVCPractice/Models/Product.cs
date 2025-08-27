@@ -14,6 +14,7 @@ namespace MVCPractice.Models
         public Category Category { get; set; }
         [NotMapped]
         public IFormFile ImageFile { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; }
 
     }
 }

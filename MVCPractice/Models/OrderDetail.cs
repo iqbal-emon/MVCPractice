@@ -15,7 +15,6 @@ namespace MVCPractice.Models
         public Product Product { get; set; }
 
         public int Count { get; set; }
-        public decimal Price { get; set; }  // সেই সময়কার দাম সেভ করে রাখা উচিত
+        public decimal Price { get; set; }
     }
-
 }
