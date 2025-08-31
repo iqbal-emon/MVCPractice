@@ -5,7 +5,7 @@
 namespace MVCPractice.Migrations
 {
     /// <inheritdoc />
-    public partial class aaa : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

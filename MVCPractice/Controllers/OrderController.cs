@@ -40,6 +40,13 @@ namespace MVCPractice.Controllers
             }
             return View(order);
         }
+        public IActionResult OrderDetailsAdmin()
+        {
+            var orderlist = _context.OrderHeader.Include(o=>o.OrderDetails).ToList();
+            return View(orderlist);
+        }
+
+
 
 
     }
