@@ -37,8 +37,11 @@
             <h4 class="mb-3">
                 Total Amount: <span class="text-success">@Model.TotalAmount</span>
             </h4>
-            <a href="#" class="btn btn-secondary rounded-pill px-4 me-2">Continue Shopping</a>
-            <a asp-controller="Home" asp-action="Checkout" class="btn btn-success rounded-pill px-4">Checkout</a>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary rounded-pill px-4 me-2">Continue Shopping</a>
+            @if (Model.ShoppingCardList.Any())
+            {
+                <a asp-controller="Home" asp-action="Checkout" class="btn btn-success rounded-pill px-4">Checkout</a>
+            }
         </div>
 
     </div>

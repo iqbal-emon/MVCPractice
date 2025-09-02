@@ -32,6 +32,13 @@
                                 <a class="nav-link text-dark" asp-controller="Order" asp-action="OrderDetailsAdmin">All Order</a>
                             </li>
                         }
+                        else
+                        @if (User.IsInRole("Employe")){
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Order" asp-action="Index">Orders</a>
+                        </li>
+                        }
                        
 
                         <partial name="_loginPartial" />
