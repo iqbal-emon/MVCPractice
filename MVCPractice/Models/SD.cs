@@ -12,5 +12,8 @@
         public const string PaymentPending = "Pending";
         public const string PaymentApproved = "Approved";
         public const string PaymentRejected = "Rejected";
+
+        public const string Role_Admin = "Admin";
+        public const string Role_Employee = "Employe";
     }
 }

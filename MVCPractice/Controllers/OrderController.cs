@@ -23,17 +23,31 @@ namespace MVCPractice.Controllers
 
             return View(orders);
         }
-        [Authorize]
 
         public IActionResult OrderDetails(int? id)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var order = _context.OrderHeader
-          .Where(o => o.Id == id && o.UserId == userId)  
+            var role=User.FindFirstValue(ClaimTypes.Role);
+            var order = new OrderHeader(); 
+            if (role == SD.Role_Admin)
+            {
+                 order = _context.OrderHeader
+          .Where(o => o.Id == id )
           .Include(o => o.OrderDetails)
               .ThenInclude(od => od.Product)
           .FirstOrDefault();
+            }
+            else
+            {
+                 order = _context.OrderHeader
+           .Where(o => o.Id == id && o.UserId == userId)
+           .Include(o => o.OrderDetails)
+               .ThenInclude(od => od.Product)
+           .FirstOrDefault();
+            }
+
+
+             
             if(order == null)
             {
                 return NotFound();

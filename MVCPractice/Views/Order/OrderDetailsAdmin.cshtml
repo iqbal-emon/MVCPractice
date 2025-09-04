@@ -23,7 +23,7 @@
                     <td>@order.OrderTotal.ToString("N2") tk</td>
                     <td>@order.OrderStatus</td>
                     <td>
-                        <a asp-action="OrderDetails" asp-route-id="@order.Id" class="btn btn-sm btn-outline-info rounded-pill">View</a>
+                        <a asp-controller="Order" asp-action="OrderDetails" asp-route-id="@order.Id" class="btn btn-sm btn-outline-info rounded-pill">View</a>
                     </td>
                 </tr>
             }
