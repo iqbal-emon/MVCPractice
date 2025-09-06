@@ -54,6 +54,24 @@ namespace MVCPractice.Controllers
             }
             return View(order);
         }
+        [HttpPost]
+        public IActionResult OrderDetails(OrderHeader orderHeader)
+        {
+            var orderFromDb = _context.OrderHeader.FirstOrDefault(o => o.Id == orderHeader.Id);
+            if (orderFromDb == null) {
+                return NotFound();
+            }
+            orderFromDb.OrderStatus = orderHeader.OrderStatus;
+            _context.OrderHeader.Update(orderFromDb);
+            _context.SaveChanges();
+
+            
+
+            return RedirectToAction(nameof(OrderDetails));
+        }
+
+
+
         public IActionResult OrderDetailsAdmin()
         {
             var orderlist = _context.OrderHeader.Include(o=>o.OrderDetails).ToList();

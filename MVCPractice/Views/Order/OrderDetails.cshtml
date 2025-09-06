@@ -19,8 +19,42 @@
                 <strong>Payment:</strong>
                 <span class="badge bg-warning">@Model.PaymentStatus</span>
             </p>
+            <p>
+                <strong>Address:</strong>
+                <span class="badge bg-primary">@Model.ShippingAddress</span>
+
+            </p>
+
+          
             <p><strong>Total Amount:</strong> <span class="text-success fw-bold">@Model.OrderTotal.ToString("N2") tk</span></p>
         </div>
+
+
+        @if (User.FindFirstValue(ClaimTypes.Role) == SD.Role_Admin)
+        {
+            <div class="row m-2">
+                <form method="post" class="d-flex align-items-center">
+                    <div class="col-6">
+                        <select asp-for="OrderStatus" class="form-control">
+                            <option disabled selected>-- Select Status --</option>
+                            <option value="@SD.StatusPending">@SD.StatusPending</option>
+                            <option value="@SD.StatusConfirmed">@SD.StatusConfirmed</option>
+                            <option value="@SD.StatusShipped">@SD.StatusShipped</option>
+                            <option value="@SD.StatusDelivered">@SD.StatusDelivered</option>
+                        </select>
+                    </div>
+
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary rounded-pill px-4 ms-2">
+                            Update Status
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        }
+     
+       
     </div>
 
     <!-- Order Items -->
