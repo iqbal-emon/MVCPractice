@@ -20,3 +20,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+.carousel-img-fixed {
+    height: 250px;
+    object-fit: cover;
+    width: 100%;
+}
