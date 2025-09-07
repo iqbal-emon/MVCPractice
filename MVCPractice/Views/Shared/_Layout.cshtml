@@ -49,15 +49,70 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container ">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted bg-light ">
-        <div class="container ">
-            &copy; 2025 - MVCPractice - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="bg-dark text-light pt-5 pb-3 mt-auto">
+        <div class="container">
+            <div class="row">
+
+                <!-- Logo & About -->
+                <div class="col-md-3 mb-4">
+                    <h4 class="fw-bold text-white">MyShopping</h4>
+                    <p class="small">
+                        Your one-stop shop for fashion, electronics, and more.
+                        Discover great deals and fast delivery at ShopEase.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-md-3 mb-4">
+                    <h5 class="fw-bold text-white">Quick Links</h5>
+                    <ul class="list-unstyled small">
+                        <li><a href="#" class="text-light text-decoration-none d-block mb-2">Home</a></li>
+                        <li><a href="#" class="text-light text-decoration-none d-block mb-2">Shop</a></li>
+                        <li><a href="#" class="text-light text-decoration-none d-block mb-2">About Us</a></li>
+                        <li><a href="#" class="text-light text-decoration-none d-block">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Customer Service -->
+                <div class="col-md-3 mb-4">
+                    <h5 class="fw-bold text-white">Customer Service</h5>
+                    <ul class="list-unstyled small">
+                        <li><a href="#" class="text-light text-decoration-none d-block mb-2">FAQs</a></li>
+                        <li><a href="#" class="text-light text-decoration-none d-block mb-2">Returns & Refunds</a></li>
+                        <li><a href="#" class="text-light text-decoration-none d-block mb-2">Shipping Info</a></li>
+                        <li><a href="#" class="text-light text-decoration-none d-block">Order Tracking</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="col-md-3 mb-4">
+                    <h5 class="fw-bold text-white">Stay Connected</h5>
+                    <p class="small">Subscribe to our newsletter for updates and offers.</p>
+                    <form class="d-flex mb-3">
+                        <input type="email" class="form-control me-2" placeholder="Enter email">
+                        <button class="btn btn-warning text-dark" type="submit">Subscribe</button>
+                    </form>
+                    <div>
+                        <a href="#" class="text-light me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr class="border-secondary">
+
+            <div class="text-center small text-secondary">
+                © 2025 MyShopping. All Rights Reserved.
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
